@@ -1,0 +1,52 @@
+{
+    "meta" : {
+        "label": "Zoho Analytics Credentials",
+        "description": "",
+        "icon": "icon-puzzle-piece"
+    },
+    "defaultDefinableInline": true,
+    "defaultDefinableAtProjectLevel": true,
+
+    "pluginParams": [
+    ],
+
+    "params": [
+        {
+            "name": "client-id",
+            "label": "Client ID",
+            "description": "Zoho Analytics Client ID",
+            "type": "STRING",
+            "mandatory" : true
+        },
+        {
+            "name": "client-secret",
+            "label": "Client Secret",
+            "description": "Zoho Analytics Client Secret",
+            "type": "PASSWORD",
+            "mandatory" : true
+        },
+         {
+            "name": "refreshtoken",
+            "label": "Refreshtoken",
+            "description": "Zoho Analytics Refresh Token",
+            "type": "PASSWORD",
+            "mandatory" : true
+        },
+        {
+            "type": "SELECT",
+            "name": "dc",
+            "label": "Zoho Analytics Data Center",
+            "description": "Choose the datacenter in which your Zoho Analytics account exist",
+            "selectChoices": [
+                { "value": "US", "label": "US (analytics.zoho.com)"},
+                { "value": "EU", "label": "EU (analytics.zoho.eu)"},
+                { "value": "IN", "label": "IN (analytics.zoho.in)"},
+                { "value": "AU", "label": "AU (analytics.zoho.com.au)"},
+                { "value": "JP", "label": "JP (analytics.zoho.jp)"},
+                { "value": "CN", "label": "CN (analytics.zoho.com.cn)"},
+                { "value": "CA", "label": "CA (analytics.zohocloud.ca)"}
+            ],
+            "mandatory" : true
+        }
+    ]
+}

@@ -1,0 +1,93 @@
+{
+    "meta" : {
+        "label" : "Export to Zoho Analytics",
+        "description" : "Custom DSS Exporter to Zoho Analytics (Cloud). This version will generate a new access token each time the Recipe is run, and requires the user to fill its Zoho Analytics credentials.",
+        "icon" : "icon-puzzle-piece"
+    },
+    
+    "exportBehavior" : "MANAGES_OUTPUT",
+        
+    "exportOptions": [
+        {
+            "label" : "Export to Zoho Analytics",
+            "id":"exporttoza"
+        }
+    ],
+    "paramsPythonSetup": "choices.py",
+    "params": [
+        {
+            "name": "zanalytics_connection",
+            "label": "Zoho Analytics Credentials",
+            "type": "PRESET",
+            "parameterSetId": "zoho-analytics-credentials"
+        },
+        {
+            "type": "SELECT",
+            "name": "org_id",
+            "label": "Choose your Zoho Analytics Organisation",
+            "description": "The Organisation you want to retrieve from Zoho Analytics",
+            "getChoicesFromPython": true,
+            "triggerParameters":["zanalytics_connection"]
+        },
+        {
+            "label":"Zoho Analytics Output",
+            "type": "SEPARATOR"
+        },
+        {
+            "type": "SELECT",
+            "name": "workspace_id",
+            "label": "Choose your Workspace",
+            "description": "The Workspace you want to retrieve from Zoho Analytics",
+            "getChoicesFromPython": true,
+            "triggerParameters":["org_id"]
+        },
+        {
+            "type": "SELECT",
+            "name": "export_method",
+            "label": "Export Method",
+            "selectChoices": [
+                { "value": "new_dataset", "label": "Create new dataset"},
+                { "value": "truncateadd", "label": "Truncate Add existing dataset"},
+                { "value": "append", "label": "Append to existing dataset"},
+                { "value": "updateadd", "label": "Update/Add data to existing dataset"}
+            ],
+            "mandatory": true,
+            "defaultValue": "new_dataset"
+        },
+        {
+            "name": "dataset",
+            "label": "Dataset",
+            "description": "Zoho Analytics Output Table Name",
+            "type": "STRING",
+            "visibilityCondition": "model.export_method == 'new_dataset'"
+        },
+        {
+            "type": "SELECT",
+            "name": "dataset_id",
+            "label": "Choose your table",
+            "description": "The specific table inside of that workspace",
+            "getChoicesFromPython": true,
+            "triggerParameters":["export_method"],
+            "visibilityCondition": "model.export_method != 'new_dataset'"
+        },
+        {
+            "type": "MULTISELECT",
+            "name": "column_id",
+            "label": "Choose the matching column for updateadd",
+            "description": "Choose the column based on which value will be updated",
+            "getChoicesFromPython": true,
+            "triggerParameters":["dataset_id"],
+            "visibilityCondition": "model.export_method == 'updateadd'"
+        },
+        {
+            "name": "buffer_size",
+            "label": "Buffer size",
+            "description": "Number of records to send to Zoho Analytics at each write",
+            "type": "INT",
+            "mandatory": true,
+            "defaultValue": 1000,
+            "minI": 1000,
+            "maxI": 10000
+        }
+    ]
+}
